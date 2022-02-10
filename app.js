@@ -1,6 +1,5 @@
-import express from 'express';
-import fetch from 'node-fetch';
-import cors from 'cors';
+const express = require('express');
+const cors = require('cors');
 
 // Create Express Server
 const app = express();
@@ -11,19 +10,16 @@ app.use(cors());
 // setting body-parser
 app.use(express.urlencoded({ extended: true }));
 
-// Proxy endpoints
-app.use('/', function (req, res, next) {
-    const targetURL = req.header('Target-URL');
-    fetch(targetURL + req.url)
-        .then((res) => res.json())
-        .then((json) => {
-            res.json(json);
-        });
+app.get('/', (req, res) => {
+    res.send('<h2> Hello, user </h2>');
 });
+
+// Proxy endpoints
+app.use('/govOpenData', require(__dirname + '/route/govOpenData'));
 
 app.set('port', process.env.PORT || 5000);
 
 // Start Proxy
-app.listen(process.env.PORT || 5000, () => {
-    console.log(`Starting Proxy`);
+const server = app.listen(process.env.PORT || 5000, () => {
+    console.log(`Starting Proxy:`, server.address());
 });
