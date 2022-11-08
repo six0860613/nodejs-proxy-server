@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
 // Proxy endpoints
 app.use('/govOpenData', require(__dirname + '/route/govOpenData'));
 
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 3002);
 
 // Start Proxy with port
-const server = app.listen(process.env.PORT || 5000, () => {
+const server = app.listen(process.env.PORT || 3002, () => {
     console.log(`Starting Proxy:`, server.address());
 });
